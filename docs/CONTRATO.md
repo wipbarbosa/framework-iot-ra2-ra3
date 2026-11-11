@@ -1065,3 +1065,12 @@ O estado inicial deverá ser disponível e desligado.
 - [ ] `resultado.csv` ou arquivo equivalente;
 - [ ] README atualizado;
 - [ ] Vídeo de até 10 minutos.
+
+## Decisões finais
+
+- A temperatura inicial padrão dos termômetros será 25,0 °C.
+- O arquivo CSV não armazenará a temperatura inicial.
+- O controlador localizará o ar-condicionado e a sirene por seus tipos concretos.
+- A `JanelaPrincipal` controlará o `javax.swing.Timer`.
+- A `Casa` será a fonte única dos dispositivos.
+- O P2 obterá sensores e atuadores por meio de `casa.getSensores()` e `casa.getAtuadores()`.
