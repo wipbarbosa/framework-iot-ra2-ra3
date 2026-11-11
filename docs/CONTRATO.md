@@ -849,3 +849,48 @@ public void diminuirTemperatura();
 - A interface deverá trabalhar com referências do tipo `Dispositivo`, `Sensor` e `Atuador` sempre que possível.
 - O `javax.swing.Timer` deverá atualizar a simulação sem bloquear a interface.
 - O controlador deverá executar os ciclos de monitoramento.
+
+## Arquivo de dados iniciais
+
+### `dados_iniciais.csv`
+
+O arquivo utilizará ponto e vírgula (`;`) como separador.
+
+Cada linha deverá representar a casa, um cômodo ou um dispositivo.
+
+### Registros permitidos
+
+```text
+CASA;nome
+COMODO;id;nome;x;y;largura;altura
+TERMOMETRO;id;nomeDoComodo;x;y
+SENSORFUMACA;id;nomeDoComodo;x;y
+ARCONDICIONADO;id;nomeDoComodo;x;y
+SIRENE;id;nomeDoComodo;x;y
+```
+
+### Exemplo
+
+```text
+CASA;Casa Principal
+COMODO;1;Sala;0;0;200;150
+COMODO;2;Cozinha;200;0;150;150
+TERMOMETRO;T1;Sala;50;50
+SENSORFUMACA;F1;Cozinha;250;60
+ARCONDICIONADO;A1;Sala;100;20
+SIRENE;S1;Cozinha;300;20
+```
+
+### Validações obrigatórias
+
+O P1 deverá verificar:
+
+- Tipo de registro válido;
+- Quantidade correta de campos;
+- Valores numéricos válidos;
+- IDs não duplicados;
+- Existência do cômodo informado;
+- Existência de uma única casa;
+- Valores positivos para largura e altura dos cômodos.
+
+Se houver erro no CSV, o P1 deverá informar o problema e não deverá gerar o arquivo `casa.dat`.
