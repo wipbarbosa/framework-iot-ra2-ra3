@@ -69,3 +69,18 @@ Classe abstrata que representa qualquer dispositivo instalado na casa.
 
 ```java
 public abstract String getStatus();
+
+## Interfaces
+
+### `Monitoravel`
+
+Interface implementada pelos sensores.
+
+Responsabilidade:
+
+- Permitir a leitura do valor atual de um sensor.
+
+Método definido:
+
+```java
+double lerValor() throws SensorFalhaException;
