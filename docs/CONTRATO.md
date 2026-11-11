@@ -84,6 +84,40 @@ Representa um cômodo da casa.
   - `largura`
   - `altura`
 
+Métodos definidos:
+
+```java
+public Comodo(
+        int id,
+        String nome,
+        int x,
+        int y,
+        int largura,
+        int altura);
+
+public int getId();
+
+public String getNome();
+
+public int getX();
+
+public int getY();
+
+public int getLargura();
+
+public int getAltura();
+
+public void setNome(String nome);
+
+public void setX(int x);
+
+public void setY(int y);
+
+public void setLargura(int largura);
+
+public void setAltura(int altura);
+```
+
 ### `Casa`
 
 Representa a casa monitorada.
@@ -93,7 +127,35 @@ Representa a casa monitorada.
   - `nome`;
   - lista de cômodos;
   - lista de dispositivos.
-- A lista de dispositivos deve usar o tipo abstrato `Dispositivo`.
+- A lista de dispositivos deve usar o tipo abstrato `Dispositivo` e será a fonte única dos dispositivos da casa.
+- `Casa` utilizará os tipos `List<Comodo>`, `List<Dispositivo>`, `List<Sensor>` e `List<Atuador>`.
+- Os métodos `getSensores()` e `getAtuadores()` deverão filtrar a lista de dispositivos e retornar os objetos correspondentes, sem manter listas duplicadas.
+
+Métodos definidos:
+
+```java
+public Casa(String nome);
+
+public String getNome();
+
+public void setNome(String nome);
+
+public List<Comodo> getComodos();
+
+public List<Dispositivo> getDispositivos();
+
+public void adicionarComodo(Comodo comodo);
+
+public void adicionarDispositivo(Dispositivo dispositivo);
+
+public List<Sensor> getSensores();
+
+public List<Atuador> getAtuadores();
+
+public Comodo buscarComodoPorNome(String nome);
+
+public Dispositivo buscarDispositivoPorId(String id);
+```
 
 ## Interfaces
 
@@ -252,6 +314,7 @@ public abstract String getStatus();
 @Override
 public abstract String gerarRegistro();
 ```
+
 ## Sensores concretos
 
 ### `Termometro`
@@ -492,76 +555,6 @@ for (Sensor sensor : sensores) {
 
 O código não deve depender diretamente de uma classe concreta para realizar a leitura de todos os sensores.
 
-## Controlador
-
-### `Controlador`
-
-Pacote:
-
-```text
-logica
-```
-
-Responsável por executar os ciclos de monitoramento da casa.
-
-O controlador deverá receber:
-
-- Uma lista de sensores;
-- Uma lista de atuadores;
-- Um objeto `LogSistema`.
-
-A lista deve utilizar os tipos abstratos `Sensor` e `Atuador`.
-
-Métodos definidos:
-
-```java
-public Controlador(
-        List<Sensor> sensores,
-        List<Atuador> atuadores,
-        LogSistema logSistema);
-
-public void executarCiclo()
-        throws IOException;
-
-public void iniciar();
-
-public void pausar();
-
-public boolean isExecutando();
-
-public List<Sensor> getSensores();
-
-public List<Atuador> getAtuadores();
-```
-
-### Regras de `executarCiclo()`
-
-A cada ciclo, o controlador deverá:
-
-1. Percorrer a lista de sensores.
-2. Chamar `lerValor()` por meio de uma referência do tipo abstrato `Sensor`.
-3. Registrar as leituras no `LogSistema`.
-4. Se a temperatura for maior que `28 °C`, acionar o `ArCondicionado`.
-5. Se a temperatura for igual ou menor que `28 °C`, desligar o `ArCondicionado`.
-6. Se a leitura do sensor de fumaça for `1.0`, acionar a `Sirene`.
-7. Se a leitura do sensor de fumaça for `0.0`, desligar a `Sirene`.
-8. Registrar as ações dos atuadores.
-9. Capturar `SensorFalhaException`.
-10. Capturar `AtuadorIndisponivelException`.
-11. Registrar as falhas sem interromper toda a simulação.
-
-### Polimorfismo
-
-O controlador deverá utilizar referências abstratas, por exemplo:
-
-```java
-for (Sensor sensor : sensores) {
-    double valor = sensor.lerValor();
-}
-```
-
-O código não deve depender diretamente de uma classe concreta para realizar a leitura de todos os sensores.
-
 ## Registro de eventos
 
 ### `LogSistema`
@@ -614,6 +607,7 @@ public void registrarFalha(
 public void registrarEncerramento()
         throws IOException;
 ```
+
 ## Leitura dos dados iniciais
 
 ### `LeitorDados`
@@ -794,6 +788,21 @@ Interface gráfica
 - O P2 deverá registrar eventos parciais durante a simulação.
 - O P2 deverá registrar o encerramento da simulação no arquivo de resultados.
 
+### Obtenção dos dispositivos
+
+Após restaurar a casa, o P2 deverá obter os dispositivos por meio dos métodos da própria `Casa`:
+
+```java
+Casa casa = restaurador.restaurar("casa.dat");
+
+List<Sensor> sensores = casa.getSensores();
+List<Atuador> atuadores = casa.getAtuadores();
+
+Controlador controlador =
+        new Controlador(sensores, atuadores, logSistema);
+```
+
+A `Casa` será a fonte única dos dispositivos. O P2 não deverá criar listas independentes a partir de classes concretas nem duplicar os dispositivos restaurados.
 
 ## Interface gráfica
 
