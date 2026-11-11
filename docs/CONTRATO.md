@@ -182,3 +182,74 @@ As duas exceções deverão:
 - Ser instanciadas com `new`;
 - Ser lançadas com `throw`;
 - Ser tratadas ou repassadas pelo código chamador.
+
+## Classes abstratas
+
+### `Sensor`
+
+Pacote:
+
+```text
+sensores
+```
+
+Classe abstrata que representa um sensor da casa.
+
+- Estende `Dispositivo`.
+- Implementa `Monitoravel`.
+- Possui um estado que indica se está funcionando.
+- Deve permitir alterar e consultar esse estado.
+
+Métodos definidos:
+
+```java
+public abstract double lerValor()
+        throws SensorFalhaException;
+
+public abstract String getTipo();
+
+public boolean isFuncionando();
+
+public void setFuncionando(boolean funcionando);
+
+@Override
+public abstract String getStatus();
+```
+
+### `Atuador`
+
+Pacote:
+
+```text
+atuadores
+```
+
+Classe abstrata que representa um atuador da casa.
+
+- Estende `Dispositivo`.
+- Implementa `Registravel`.
+- Possui estado de disponibilidade.
+- Possui estado de funcionamento, indicando se está ligado ou desligado.
+
+Métodos definidos:
+
+```java
+public abstract void acionar()
+        throws AtuadorIndisponivelException;
+
+public abstract void desligar()
+        throws AtuadorIndisponivelException;
+
+public boolean isDisponivel();
+
+public void setDisponivel(boolean disponivel);
+
+public boolean isLigado();
+
+@Override
+public abstract String getStatus();
+
+@Override
+public abstract String gerarRegistro();
+```
+
