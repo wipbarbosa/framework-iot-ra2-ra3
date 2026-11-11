@@ -69,6 +69,31 @@ Classe abstrata que representa qualquer dispositivo instalado na casa.
 
 ```java
 public abstract String getStatus();
+```
+
+### `Comodo`
+
+Representa um cômodo da casa.
+
+- Implementa `Serializable`.
+- Atributos privados:
+  - `id`
+  - `nome`
+  - `x`
+  - `y`
+  - `largura`
+  - `altura`
+
+### `Casa`
+
+Representa a casa monitorada.
+
+- Implementa `Serializable`.
+- Possui:
+  - `nome`;
+  - lista de cômodos;
+  - lista de dispositivos.
+- A lista de dispositivos deve usar o tipo abstrato `Dispositivo`.
 
 ## Interfaces
 
@@ -84,3 +109,76 @@ Método definido:
 
 ```java
 double lerValor() throws SensorFalhaException;
+```
+
+### `Registravel`
+
+Interface implementada pelos atuadores.
+
+Responsabilidade:
+
+- Fornecer uma representação textual do estado ou da ação de um atuador.
+
+Método definido:
+
+```java
+String gerarRegistro();
+```
+
+### Decisão de implementação
+
+- `Sensor` implementará `Monitoravel`.
+- `Atuador` implementará `Registravel`.
+- As subclasses concretas herdarão essas implementações por meio de suas respectivas classes abstratas.
+
+## Exceções personalizadas
+
+### `SensorFalhaException`
+
+Pacote:
+
+```text
+excecoes
+```
+
+Responsável por representar falhas durante a leitura de um sensor.
+
+Declaração:
+
+```java
+public class SensorFalhaException extends Exception {
+    public SensorFalhaException(String mensagem);
+}
+```
+
+Essa exceção deverá ser criada e lançada com `throw` quando um sensor estiver em falha ou quando sua leitura for inválida.
+
+### `AtuadorIndisponivelException`
+
+Pacote:
+
+```text
+excecoes
+```
+
+Responsável por representar uma tentativa de acionar ou desligar um atuador indisponível.
+
+Declaração:
+
+```java
+public class AtuadorIndisponivelException extends Exception {
+    public AtuadorIndisponivelException(String mensagem);
+}
+```
+
+Essa exceção deverá ser criada e lançada com `throw` quando um atuador estiver indisponível ou defeituoso.
+
+### Regra comum
+
+As duas exceções deverão:
+
+- Estender diretamente `Exception`;
+- Ser exceções verificadas;
+- Ser instanciadas com `new`;
+- Ser lançadas com `throw`;
+- Ser tratadas ou repassadas pelo código chamador.
