@@ -741,3 +741,55 @@ O método deverá:
 - O tratamento dessas exceções deverá ocorrer no P2 ou em outra classe chamadora.
 - O arquivo binário deverá ter sido criado anteriormente pelo P1.
 - O P2 não deverá recriar os objetos a partir do CSV; deverá restaurá-los usando o arquivo binário.
+
+## Programa P2
+
+### `P2`
+
+Pacote:
+
+```text
+interfacegrafica
+```
+
+O P2 será executado separadamente e será responsável por:
+
+1. Restaurar a casa a partir do arquivo `casa.dat`;
+2. Obter os sensores e atuadores restaurados;
+3. Criar o `LogSistema`;
+4. Criar o `Controlador`;
+5. Abrir a interface gráfica;
+6. Executar a simulação;
+7. Registrar os resultados parciais e finais.
+
+Declaração principal:
+
+```java
+public static void main(String[] args);
+```
+
+### Fluxo esperado
+
+```text
+casa.dat
+   |
+   v
+Restaurador
+   |
+   v
+Casa restaurada
+   |
+   v
+Controlador + LogSistema
+   |
+   v
+Interface gráfica
+```
+
+### Regras
+
+- O P2 não deverá ler o arquivo CSV diretamente.
+- O P2 deverá usar o `Restaurador` para carregar os objetos.
+- O P2 deverá ser executável separadamente do P1, desde que o arquivo `casa.dat` já exista.
+- O P2 deverá registrar eventos parciais durante a simulação.
+- O P2 deverá registrar o encerramento da simulação no arquivo de resultados.
