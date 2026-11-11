@@ -614,94 +614,51 @@ public void registrarFalha(
 public void registrarEncerramento()
         throws IOException;
 ```
+## Leitura dos dados iniciais
 
-### Formato mínimo do registro
-
-Cada linha deverá conter:
-
-```text
-timestamp;tipo;identificacao;descricao
-```
-
-Exemplos:
-
-```text
-2026-11-11T16:50:00;LEITURA;T1;Temperatura=30.5
-2026-11-11T16:50:01;ACAO;A1;ACIONAR;status=ligado
-2026-11-11T16:50:02;FALHA;F1;Falha na leitura
-2026-11-11T16:50:10;FIM;SISTEMA;Simulacao encerrada
-```
-
-O arquivo de log deverá conter registros parciais durante a simulação e um registro final de encerramento.
-
-## Registro de eventos
-
-### `LogSistema`
+### `LeitorDados`
 
 Pacote:
 
 ```text
-log
+persistencia
 ```
 
-Responsável por registrar os resultados parciais e finais da execução do P2.
+Responsável por ler o arquivo `dados_iniciais.csv`, validar seus registros e criar o objeto `Casa` com seus cômodos, sensores e atuadores.
 
-O log deverá ser salvo em arquivo `.csv` ou `.txt`, sempre incluindo data e hora do evento.
-
-A classe deverá possuir:
-
-- O caminho do arquivo de saída;
-- Métodos para registrar leituras;
-- Métodos para registrar ações dos atuadores;
-- Métodos para registrar falhas;
-- Método para registrar o encerramento da simulação.
-
-Métodos definidos:
+Método definido:
 
 ```java
-public LogSistema(String caminhoArquivo);
-
-public String getCaminhoArquivo();
-
-public void registrar(String mensagem)
-        throws IOException;
-
-public void registrarLeitura(
-        String sensorId,
-        String tipoSensor,
-        double valor)
-        throws IOException;
-
-public void registrarAcao(
-        String atuadorId,
-        String acao,
-        String status)
-        throws IOException;
-
-public void registrarFalha(
-        String origem,
-        String mensagem)
-        throws IOException;
-
-public void registrarEncerramento()
+public Casa lerDadosIniciais(String caminhoArquivo)
         throws IOException;
 ```
 
-### Formato mínimo do registro
+O método deverá:
 
-Cada linha deverá conter:
+- Abrir o arquivo CSV;
+- Ler cada linha;
+- Identificar o tipo de registro;
+- Validar a quantidade de campos;
+- Validar valores numéricos;
+- Verificar IDs duplicados;
+- Verificar se o cômodo informado existe;
+- Criar os objetos correspondentes;
+- Associar cada dispositivo ao cômodo informado;
+- Retornar uma instância de `Casa`.
+
+### Formato dos registros
 
 ```text
-timestamp;tipo;identificacao;descricao
+CASA;nome
+COMODO;id;nome;x;y;largura;altura
+TERMOMETRO;id;nomeDoComodo;x;y
+SENSORFUMACA;id;nomeDoComodo;x;y
+ARCONDICIONADO;id;nomeDoComodo;x;y
+SIRENE;id;nomeDoComodo;x;y
 ```
 
-Exemplos:
+### Política para erros no CSV
 
-```text
-2026-11-11T16:50:00;LEITURA;T1;Temperatura=30.5
-2026-11-11T16:50:01;ACAO;A1;ACIONAR;status=ligado
-2026-11-11T16:50:02;FALHA;F1;Falha na leitura
-2026-11-11T16:50:10;FIM;SISTEMA;Simulacao encerrada
-```
+Durante o P1, se for encontrado um erro de formato, ID duplicado ou cômodo inexistente, o processamento deverá ser interrompido e o erro deverá ser informado ao usuário.
 
-O arquivo de log deverá conter registros parciais durante a simulação e um registro final de encerramento.
+O arquivo binário não deverá ser gerado quando a leitura do CSV falhar.
