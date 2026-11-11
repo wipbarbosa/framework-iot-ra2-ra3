@@ -342,3 +342,82 @@ Regras:
 
 - Se o sensor estiver com falha, `lerValor()` deverá lançar `SensorFalhaException`.
 - O tipo retornado por `getTipo()` deverá identificar o sensor como sensor de fumaça.
+
+## Atuadores concretos
+
+### `ArCondicionado`
+
+Pacote:
+
+```text
+atuadores
+```
+
+Representa o aparelho de ar-condicionado da casa.
+
+- Estende `Atuador`.
+- Deve ser acionado quando a temperatura estiver acima do limite definido.
+- Deve ser desligado quando a temperatura voltar ao nível normal.
+
+Métodos definidos:
+
+```java
+@Override
+public void acionar()
+        throws AtuadorIndisponivelException;
+
+@Override
+public void desligar()
+        throws AtuadorIndisponivelException;
+
+@Override
+public String getStatus();
+
+@Override
+public String gerarRegistro();
+```
+
+### `Sirene`
+
+Pacote:
+
+```text
+atuadores
+```
+
+Representa a sirene de alerta da casa.
+
+- Estende `Atuador`.
+- Deve ser acionada quando houver fumaça.
+- Deve ser desligada quando não houver fumaça.
+
+Métodos definidos:
+
+```java
+@Override
+public void acionar()
+        throws AtuadorIndisponivelException;
+
+@Override
+public void desligar()
+        throws AtuadorIndisponivelException;
+
+@Override
+public String getStatus();
+
+@Override
+public String gerarRegistro();
+```
+
+### Regras dos atuadores
+
+Os métodos `acionar()` e `desligar()` deverão:
+
+- Verificar se o atuador está disponível;
+- Lançar `AtuadorIndisponivelException` quando estiver indisponível;
+- Atualizar o estado ligado/desligado quando a operação for realizada;
+- Permitir que a interface gráfica consulte o estado por meio de `getStatus()`.
+
+A classe `ArCondicionado` deverá ser localizada pelo controlador quando houver temperatura acima do limite.
+
+A classe `Sirene` deverá ser localizada pelo controlador quando houver fumaça detectada.
