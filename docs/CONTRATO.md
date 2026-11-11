@@ -707,3 +707,37 @@ casa.dat
 - O P1 deverá ser executável independentemente do P2.
 - O arquivo `casa.dat` somente deverá ser criado se o CSV for válido.
 - O P1 deverá informar ao usuário se a criação do arquivo foi concluída ou se ocorreu algum erro.
+
+## Restauração dos objetos
+
+### `Restaurador`
+
+Pacote:
+
+```text
+persistencia
+```
+
+Responsável por restaurar em memória o objeto `Casa` e todos os objetos associados a partir do arquivo binário gerado pelo P1.
+
+Método definido:
+
+```java
+public Casa restaurar(String caminhoArquivo)
+        throws IOException, ClassNotFoundException;
+```
+
+O método deverá:
+
+- Abrir o arquivo binário com `ObjectInputStream`;
+- Ler o objeto serializado;
+- Verificar se o objeto restaurado é uma instância de `Casa`;
+- Retornar a casa restaurada;
+- Repassar `IOException` e `ClassNotFoundException` ao método chamador.
+
+### Regras
+
+- O método `restaurar()` não deverá capturar internamente as exceções declaradas com `try-catch`.
+- O tratamento dessas exceções deverá ocorrer no P2 ou em outra classe chamadora.
+- O arquivo binário deverá ter sido criado anteriormente pelo P1.
+- O P2 não deverá recriar os objetos a partir do CSV; deverá restaurá-los usando o arquivo binário.
