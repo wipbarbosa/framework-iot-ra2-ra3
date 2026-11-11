@@ -561,3 +561,75 @@ for (Sensor sensor : sensores) {
 ```
 
 O código não deve depender diretamente de uma classe concreta para realizar a leitura de todos os sensores.
+
+## Registro de eventos
+
+### `LogSistema`
+
+Pacote:
+
+```text
+log
+```
+
+Responsável por registrar os resultados parciais e finais da execução do P2.
+
+O log deverá ser salvo em arquivo `.csv` ou `.txt`, sempre incluindo data e hora do evento.
+
+A classe deverá possuir:
+
+- O caminho do arquivo de saída;
+- Métodos para registrar leituras;
+- Métodos para registrar ações dos atuadores;
+- Métodos para registrar falhas;
+- Método para registrar o encerramento da simulação.
+
+Métodos definidos:
+
+```java
+public LogSistema(String caminhoArquivo);
+
+public String getCaminhoArquivo();
+
+public void registrar(String mensagem)
+        throws IOException;
+
+public void registrarLeitura(
+        String sensorId,
+        String tipoSensor,
+        double valor)
+        throws IOException;
+
+public void registrarAcao(
+        String atuadorId,
+        String acao,
+        String status)
+        throws IOException;
+
+public void registrarFalha(
+        String origem,
+        String mensagem)
+        throws IOException;
+
+public void registrarEncerramento()
+        throws IOException;
+```
+
+### Formato mínimo do registro
+
+Cada linha deverá conter:
+
+```text
+timestamp;tipo;identificacao;descricao
+```
+
+Exemplos:
+
+```text
+2026-11-11T16:50:00;LEITURA;T1;Temperatura=30.5
+2026-11-11T16:50:01;ACAO;A1;ACIONAR;status=ligado
+2026-11-11T16:50:02;FALHA;F1;Falha na leitura
+2026-11-11T16:50:10;FIM;SISTEMA;Simulacao encerrada
+```
+
+O arquivo de log deverá conter registros parciais durante a simulação e um registro final de encerramento.
