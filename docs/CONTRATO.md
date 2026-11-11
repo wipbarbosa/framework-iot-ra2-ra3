@@ -894,3 +894,72 @@ O P1 deverá verificar:
 - Valores positivos para largura e altura dos cômodos.
 
 Se houver erro no CSV, o P1 deverá informar o problema e não deverá gerar o arquivo `casa.dat`.
+
+## Arquivo de resultados
+
+### Arquivo de log
+
+O P2 deverá gerar um arquivo de resultados em formato `.csv` ou `.txt`.
+
+O nome padrão será:
+
+```text
+resultado.csv
+```
+
+Cada linha deverá seguir o formato:
+
+```text
+timestamp;tipo;identificacao;descricao
+```
+
+Exemplos:
+
+```text
+2026-11-11T16:50:00;LEITURA;T1;Temperatura=30.5
+2026-11-11T16:50:01;ACAO;A1;ACIONAR - status=ligado
+2026-11-11T16:50:02;FALHA;F1;Falha na leitura
+2026-11-11T16:51:00;FIM;SISTEMA;Simulacao encerrada
+```
+
+Tipos de registro previstos:
+
+- `LEITURA`: leitura realizada por um sensor;
+- `ACAO`: acionamento ou desligamento de um atuador;
+- `FALHA`: erro ou exceção ocorrida durante a simulação;
+- `FIM`: encerramento da simulação.
+
+## Checklist dos requisitos
+
+### RA2
+
+- [ ] Duas exceções personalizadas derivadas de `Exception`;
+- [ ] Uso de `throw` nas duas exceções;
+- [ ] Dois métodos com `throws` sem `try-catch` interno;
+- [ ] Pelo menos dois pacotes;
+- [ ] Atributos encapsulados;
+- [ ] Generalização e especialização;
+- [ ] Polimorfismo;
+- [ ] Classe abstrata;
+- [ ] Método abstrato;
+- [ ] Interface implementada por uma classe;
+- [ ] Chamada de método polimórfica.
+
+### RA3
+
+- [ ] P1 lê o arquivo CSV;
+- [ ] P1 cria os objetos da casa;
+- [ ] P1 salva os objetos em formato binário;
+- [ ] P2 restaura os objetos em memória;
+- [ ] P2 possui interface gráfica;
+- [ ] P2 registra resultados parciais;
+- [ ] P2 registra o resultado final.
+
+### Entregáveis
+
+- [ ] Código-fonte completo;
+- [ ] `dados_iniciais.csv`;
+- [ ] `casa.dat`;
+- [ ] `resultado.csv` ou arquivo equivalente;
+- [ ] README atualizado;
+- [ ] Vídeo de até 10 minutos.
