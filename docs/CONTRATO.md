@@ -793,3 +793,59 @@ Interface gráfica
 - O P2 deverá ser executável separadamente do P1, desde que o arquivo `casa.dat` já exista.
 - O P2 deverá registrar eventos parciais durante a simulação.
 - O P2 deverá registrar o encerramento da simulação no arquivo de resultados.
+
+
+## Interface gráfica
+
+### `JanelaPrincipal`
+
+Pacote:
+
+```text
+interfacegrafica
+```
+
+Responsável por exibir a planta da casa, os dispositivos e os controles da simulação.
+
+A janela deverá:
+
+- Exibir os cômodos como retângulos;
+- Posicionar sensores e atuadores usando suas coordenadas;
+- Mostrar o status dos dispositivos;
+- Permitir iniciar e pausar a simulação;
+- Permitir forçar e dissipar fumaça;
+- Permitir aumentar e diminuir a temperatura;
+- Atualizar a tela periodicamente;
+- Encerrar corretamente o temporizador ao fechar a janela.
+
+A classe deverá utilizar `JFrame` e `javax.swing.Timer`.
+
+Construtor e métodos definidos:
+
+```java
+public JanelaPrincipal(
+        Casa casa,
+        Controlador controlador);
+
+public void atualizarTela();
+
+public void iniciarSimulacao();
+
+public void pausarSimulacao();
+
+public void forcarFumaca();
+
+public void dissiparFumaca();
+
+public void aumentarTemperatura();
+
+public void diminuirTemperatura();
+```
+
+### Regras da interface
+
+- A janela não deverá acessar diretamente os atributos privados dos objetos.
+- A comunicação deverá ocorrer por métodos públicos, como `getStatus()`, `forcarFumaca()` e `aumentarTemperatura()`.
+- A interface deverá trabalhar com referências do tipo `Dispositivo`, `Sensor` e `Atuador` sempre que possível.
+- O `javax.swing.Timer` deverá atualizar a simulação sem bloquear a interface.
+- O controlador deverá executar os ciclos de monitoramento.
