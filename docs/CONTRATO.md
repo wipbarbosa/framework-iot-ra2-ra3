@@ -252,4 +252,93 @@ public abstract String getStatus();
 @Override
 public abstract String gerarRegistro();
 ```
+## Sensores concretos
 
+### `Termometro`
+
+Pacote:
+
+```text
+sensores
+```
+
+Representa um sensor de temperatura.
+
+- Estende `Sensor`.
+- Mantém a temperatura atual em graus Celsius.
+- A leitura deve retornar a temperatura atual.
+- Deve permitir aumentar e diminuir a temperatura pela interface gráfica.
+
+Métodos definidos:
+
+```java
+public double getTemperaturaAtual();
+
+public void setTemperaturaAtual(double temperaturaAtual);
+
+public void aumentarTemperatura(double valor);
+
+public void diminuirTemperatura(double valor);
+
+@Override
+public double lerValor()
+        throws SensorFalhaException;
+
+@Override
+public String getTipo();
+
+@Override
+public String getStatus();
+```
+
+Regras:
+
+- Se o sensor estiver com falha, `lerValor()` deverá lançar `SensorFalhaException`.
+- O tipo retornado por `getTipo()` deverá identificar o sensor como termômetro.
+- A temperatura será expressa em graus Celsius.
+
+### `SensorFumaca`
+
+Pacote:
+
+```text
+sensores
+```
+
+Representa um sensor de fumaça.
+
+- Estende `Sensor`.
+- Mantém a informação sobre a presença ou ausência de fumaça.
+- Deve permitir forçar e dissipar fumaça pela interface gráfica.
+
+Métodos definidos:
+
+```java
+public boolean isFumacaDetectada();
+
+public void setFumacaDetectada(boolean fumacaDetectada);
+
+public void forcarFumaca();
+
+public void dissiparFumaca();
+
+@Override
+public double lerValor()
+        throws SensorFalhaException;
+
+@Override
+public String getTipo();
+
+@Override
+public String getStatus();
+```
+
+Convenção da leitura:
+
+- `1.0`: fumaça detectada;
+- `0.0`: ausência de fumaça.
+
+Regras:
+
+- Se o sensor estiver com falha, `lerValor()` deverá lançar `SensorFalhaException`.
+- O tipo retornado por `getTipo()` deverá identificar o sensor como sensor de fumaça.
