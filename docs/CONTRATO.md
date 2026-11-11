@@ -52,3 +52,20 @@ O programa P1 deverá ler os dados iniciais de um arquivo CSV, criar os objetos 
 
 O programa P2 deverá restaurar os objetos do arquivo binário, abrir a interface gráfica, executar a simulação e registrar os resultados.
 
+## Classes do pacote `modelo`
+
+### `Dispositivo`
+
+Classe abstrata que representa qualquer dispositivo instalado na casa.
+
+- Implementa `Serializable`.
+- Atributos privados:
+  - `id`
+  - `nome`
+  - `comodoNome`
+  - `x`
+  - `y`
+- Declara o método abstrato:
+
+```java
+public abstract String getStatus();
