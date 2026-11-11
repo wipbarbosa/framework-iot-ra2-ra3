@@ -421,3 +421,73 @@ Os métodos `acionar()` e `desligar()` deverão:
 A classe `ArCondicionado` deverá ser localizada pelo controlador quando houver temperatura acima do limite.
 
 A classe `Sirene` deverá ser localizada pelo controlador quando houver fumaça detectada.
+
+## Controlador
+
+### `Controlador`
+
+Pacote:
+
+```text
+logica
+```
+
+Responsável por executar os ciclos de monitoramento da casa.
+
+O controlador deverá receber:
+
+- Uma lista de sensores;
+- Uma lista de atuadores;
+- Um objeto `LogSistema`.
+
+A lista deve utilizar os tipos abstratos `Sensor` e `Atuador`.
+
+Métodos definidos:
+
+```java
+public Controlador(
+        List<Sensor> sensores,
+        List<Atuador> atuadores,
+        LogSistema logSistema);
+
+public void executarCiclo()
+        throws IOException;
+
+public void iniciar();
+
+public void pausar();
+
+public boolean isExecutando();
+
+public List<Sensor> getSensores();
+
+public List<Atuador> getAtuadores();
+```
+
+### Regras de `executarCiclo()`
+
+A cada ciclo, o controlador deverá:
+
+1. Percorrer a lista de sensores.
+2. Chamar `lerValor()` por meio de uma referência do tipo abstrato `Sensor`.
+3. Registrar as leituras no `LogSistema`.
+4. Se a temperatura for maior que `28 °C`, acionar o `ArCondicionado`.
+5. Se a temperatura for igual ou menor que `28 °C`, desligar o `ArCondicionado`.
+6. Se a leitura do sensor de fumaça for `1.0`, acionar a `Sirene`.
+7. Se a leitura do sensor de fumaça for `0.0`, desligar a `Sirene`.
+8. Registrar as ações dos atuadores.
+9. Capturar `SensorFalhaException`.
+10. Capturar `AtuadorIndisponivelException`.
+11. Registrar as falhas sem interromper toda a simulação.
+
+### Polimorfismo
+
+O controlador deverá utilizar referências abstratas, por exemplo:
+
+```java
+for (Sensor sensor : sensores) {
+    double valor = sensor.lerValor();
+}
+```
+
+O código não deve depender diretamente de uma classe concreta para realizar a leitura de todos os sensores.
