@@ -938,6 +938,99 @@ Tipos de registro previstos:
 - `FALHA`: erro ou exceção ocorrida durante a simulação;
 - `FIM`: encerramento da simulação.
 
+## Construtores dos dispositivos
+
+### `Dispositivo`
+
+```java
+protected Dispositivo(
+        String id,
+        String nome,
+        String comodoNome,
+        int x,
+        int y);
+```
+
+O construtor é `protected` porque `Dispositivo` é abstrata e será inicializada pelas classes derivadas.
+
+### `Sensor`
+
+```java
+protected Sensor(
+        String id,
+        String nome,
+        String comodoNome,
+        int x,
+        int y);
+```
+
+### `Atuador`
+
+```java
+protected Atuador(
+        String id,
+        String nome,
+        String comodoNome,
+        int x,
+        int y);
+```
+
+Os construtores de `Sensor` e `Atuador` deverão inicializar os atributos herdados de `Dispositivo` e seus estados iniciais.
+
+### `Termometro`
+
+```java
+public Termometro(
+        String id,
+        String nome,
+        String comodoNome,
+        int x,
+        int y,
+        double temperaturaInicial);
+```
+
+A temperatura inicial deverá ser armazenada em graus Celsius.
+
+### `SensorFumaca`
+
+```java
+public SensorFumaca(
+        String id,
+        String nome,
+        String comodoNome,
+        int x,
+        int y);
+```
+
+O estado inicial deverá indicar ausência de fumaça.
+
+### `ArCondicionado`
+
+```java
+public ArCondicionado(
+        String id,
+        String nome,
+        String comodoNome,
+        int x,
+        int y);
+```
+
+O estado inicial deverá ser disponível e desligado.
+
+### `Sirene`
+
+```java
+public Sirene(
+        String id,
+        String nome,
+        String comodoNome,
+        int x,
+        int y);
+```
+
+O estado inicial deverá ser disponível e desligado.
+
+
 ## Checklist dos requisitos
 
 ### RA2
