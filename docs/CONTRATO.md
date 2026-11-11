@@ -662,3 +662,48 @@ SIRENE;id;nomeDoComodo;x;y
 Durante o P1, se for encontrado um erro de formato, ID duplicado ou cômodo inexistente, o processamento deverá ser interrompido e o erro deverá ser informado ao usuário.
 
 O arquivo binário não deverá ser gerado quando a leitura do CSV falhar.
+
+## Programa P1
+
+### `P1`
+
+Pacote:
+
+```text
+persistencia
+```
+
+O P1 será executado separadamente e será responsável por:
+
+1. Ler o arquivo `dados_iniciais.csv`;
+2. Criar os objetos da casa por meio de `LeitorDados`;
+3. Salvar a casa e todos os seus objetos em formato binário;
+4. Gerar o arquivo `casa.dat`.
+
+Declaração principal:
+
+```java
+public static void main(String[] args);
+```
+
+### Fluxo esperado
+
+```text
+dados_iniciais.csv
+        |
+        v
+LeitorDados
+        |
+        v
+Casa e dispositivos
+        |
+        v
+casa.dat
+```
+
+### Regras
+
+- O P1 não deverá abrir a interface gráfica.
+- O P1 deverá ser executável independentemente do P2.
+- O arquivo `casa.dat` somente deverá ser criado se o CSV for válido.
+- O P1 deverá informar ao usuário se a criação do arquivo foi concluída ou se ocorreu algum erro.
