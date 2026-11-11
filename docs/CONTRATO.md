@@ -17,3 +17,38 @@ Qualquer alteração neste contrato deverá ser discutida e aprovada pela equipe
 ## Status
 
 Contrato em definição.
+
+## Pacotes do projeto
+
+| Pacote | Responsabilidade |
+|---|---|
+| `modelo` | Classes centrais da casa, cômodos e dispositivos |
+| `interfaces` | Interfaces utilizadas pelo sistema |
+| `sensores` | Sensores e suas especializações |
+| `atuadores` | Atuadores e suas especializações |
+| `excecoes` | Exceções personalizadas da aplicação |
+| `logica` | Regras de controle e execução da simulação |
+| `log` | Registro dos eventos da aplicação |
+| `persistencia` | Leitura de dados, P1 e restauração dos objetos |
+| `interfacegrafica` | P2 e componentes da interface gráfica |
+
+## Responsabilidade inicial por integrante
+
+| Integrante | Responsabilidade |
+|---|---|
+| Pessoa 1 | Modelo-base, interfaces e integração da arquitetura |
+| Pessoa 2 | Sensores e lógica de controle |
+| Pessoa 3 | Atuadores |
+| Pessoa 4 | Persistência e registros |
+| Pessoa 5 | Interface gráfica e P2 |
+
+## Programas
+
+### P1
+
+O programa P1 deverá ler os dados iniciais de um arquivo CSV, criar os objetos da casa e salvá-los em um arquivo binário.
+
+### P2
+
+O programa P2 deverá restaurar os objetos do arquivo binário, abrir a interface gráfica, executar a simulação e registrar os resultados.
+
