@@ -1,0 +1,14 @@
+tipo;id;nome;comodo;x;y;v1;v2
+COMODO;C1;Sala;;0;0;300;200
+COMODO;C2;Cozinha;;300;0;200;200
+COMODO;C3;Quarto;;0;200;250;200
+COMODO;C4;Banheiro;;250;200;150;200
+TERMOMETRO;T1;Termometro Sala;C1;50;50;25;
+TERMOMETRO;T2;Termometro Quarto;C3;50;50;22;
+TERMOMETRO;T3;Termometro Cozinha;C2;50;50;27;
+FUMACA;F1;Fumaca Sala;C1;150;50;;
+FUMACA;F2;Fumaca Cozinha;C2;150;50;;
+AR;A1;Ar Sala;C1;50;150;24;28
+AR;A2;Ar Quarto;C3;50;150;22;26
+SIRENE;S1;Sirene Sala;C1;150;150;;
+SIRENE;S2;Sirene Cozinha;C2;150;150;;
