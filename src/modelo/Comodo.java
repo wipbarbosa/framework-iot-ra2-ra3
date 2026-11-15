@@ -6,7 +6,7 @@ public class Comodo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int id;
+    private String id;
     private String nome;
     private int x;
     private int y;
@@ -14,7 +14,7 @@ public class Comodo implements Serializable {
     private int altura;
 
     public Comodo(
-            int id,
+            String id,
             String nome,
             int x,
             int y,
@@ -28,7 +28,7 @@ public class Comodo implements Serializable {
         this.altura = altura;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

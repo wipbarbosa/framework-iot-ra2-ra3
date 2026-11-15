@@ -88,14 +88,14 @@ Métodos definidos:
 
 ```java
 public Comodo(
-        int id,
+        String id,
         String nome,
         int x,
         int y,
         int largura,
         int altura);
 
-public int getId();
+public String getId();
 
 public String getNome();
 
@@ -153,6 +153,8 @@ public List<Sensor> getSensores();
 public List<Atuador> getAtuadores();
 
 public Comodo buscarComodoPorNome(String nome);
+
+public Comodo buscarComodoPorId(String id);
 
 public Dispositivo buscarDispositivoPorId(String id);
 ```
@@ -618,7 +620,7 @@ Pacote:
 persistencia
 ```
 
-Responsável por ler o arquivo `dados_iniciais.csv`, validar seus registros e criar o objeto `Casa` com seus cômodos, sensores e atuadores.
+Responsável por ler o arquivo `casa.csv`, validar seus registros e criar o objeto `Casa` com seus cômodos, sensores e atuadores.
 
 Método definido:
 
@@ -643,12 +645,12 @@ O método deverá:
 ### Formato dos registros
 
 ```text
-CASA;nome
-COMODO;id;nome;x;y;largura;altura
-TERMOMETRO;id;nomeDoComodo;x;y
-SENSORFUMACA;id;nomeDoComodo;x;y
-ARCONDICIONADO;id;nomeDoComodo;x;y
-SIRENE;id;nomeDoComodo;x;y
+tipo;id;nome;comodo;x;y;v1;v2
+COMODO;id;nome;;x;y;largura;altura
+TERMOMETRO;id;nome;idDoComodo;x;y;temperaturaInicial;
+FUMACA;id;nome;idDoComodo;x;y;;
+AR;id;nome;idDoComodo;x;y;v1;v2
+SIRENE;id;nome;idDoComodo;x;y;;
 ```
 
 ### Política para erros no CSV
@@ -669,7 +671,7 @@ persistencia
 
 O P1 será executado separadamente e será responsável por:
 
-1. Ler o arquivo `dados_iniciais.csv`;
+1. Ler o arquivo `casa.csv`;
 2. Criar os objetos da casa por meio de `LeitorDados`;
 3. Salvar a casa e todos os seus objetos em formato binário;
 4. Gerar o arquivo `casa.dat`.
@@ -683,7 +685,7 @@ public static void main(String[] args);
 ### Fluxo esperado
 
 ```text
-dados_iniciais.csv
+casa.csv
         |
         v
 LeitorDados
@@ -861,33 +863,43 @@ public void diminuirTemperatura();
 
 ## Arquivo de dados iniciais
 
-### `dados_iniciais.csv`
+### `casa.csv`
 
 O arquivo utilizará ponto e vírgula (`;`) como separador.
 
-Cada linha deverá representar a casa, um cômodo ou um dispositivo.
+A primeira linha é o cabeçalho e deverá ser ignorada.
+
+Cada uma das demais linhas deverá representar um cômodo ou um dispositivo.
 
 ### Registros permitidos
 
 ```text
-CASA;nome
-COMODO;id;nome;x;y;largura;altura
-TERMOMETRO;id;nomeDoComodo;x;y
-SENSORFUMACA;id;nomeDoComodo;x;y
-ARCONDICIONADO;id;nomeDoComodo;x;y
-SIRENE;id;nomeDoComodo;x;y
+tipo;id;nome;comodo;x;y;v1;v2
+COMODO;id;nome;;x;y;largura;altura
+TERMOMETRO;id;nome;idDoComodo;x;y;temperaturaInicial;
+FUMACA;id;nome;idDoComodo;x;y;;
+AR;id;nome;idDoComodo;x;y;v1;v2
+SIRENE;id;nome;idDoComodo;x;y;;
 ```
+
+### Regras dos campos
+
+- No campo `comodo`, os dispositivos informam o id do cômodo, como `C1`.
+- O `LeitorDados` deverá localizar o cômodo com `buscarComodoPorId()` e guardar o nome do cômodo no dispositivo.
+- As posições `x` e `y` dos dispositivos são relativas ao canto do cômodo.
+- Nos registros `TERMOMETRO`, o campo `v1` guarda a temperatura inicial em graus Celsius.
+- Nos registros `AR`, o uso dos campos `v1` e `v2` ainda será definido.
 
 ### Exemplo
 
 ```text
-CASA;Casa Principal
-COMODO;1;Sala;0;0;200;150
-COMODO;2;Cozinha;200;0;150;150
-TERMOMETRO;T1;Sala;50;50
-SENSORFUMACA;F1;Cozinha;250;60
-ARCONDICIONADO;A1;Sala;100;20
-SIRENE;S1;Cozinha;300;20
+tipo;id;nome;comodo;x;y;v1;v2
+COMODO;C1;Sala;;0;0;300;200
+COMODO;C2;Cozinha;;300;0;200;200
+TERMOMETRO;T1;Termometro Sala;C1;50;50;25;
+FUMACA;F2;Fumaca Cozinha;C2;150;50;;
+AR;A1;Ar Sala;C1;50;150;24;28
+SIRENE;S2;Sirene Cozinha;C2;150;150;;
 ```
 
 ### Validações obrigatórias
@@ -899,7 +911,6 @@ O P1 deverá verificar:
 - Valores numéricos válidos;
 - IDs não duplicados;
 - Existência do cômodo informado;
-- Existência de uma única casa;
 - Valores positivos para largura e altura dos cômodos.
 
 Se houver erro no CSV, o P1 deverá informar o problema e não deverá gerar o arquivo `casa.dat`.
@@ -1060,7 +1071,7 @@ O estado inicial deverá ser disponível e desligado.
 ### Entregáveis
 
 - [ ] Código-fonte completo;
-- [ ] `dados_iniciais.csv`;
+- [ ] `casa.csv`;
 - [ ] `casa.dat`;
 - [ ] `resultado.csv` ou arquivo equivalente;
 - [ ] README atualizado;
@@ -1068,8 +1079,8 @@ O estado inicial deverá ser disponível e desligado.
 
 ## Decisões finais
 
-- A temperatura inicial padrão dos termômetros será 25,0 °C.
-- O arquivo CSV não armazenará a temperatura inicial.
+- A temperatura inicial de cada termômetro virá do CSV, no campo `v1`.
+- Como o CSV não possui registro da casa, o `LeitorDados` criará a casa com o nome `Casa Principal`.
 - O controlador localizará o ar-condicionado e a sirene por seus tipos concretos.
 - A `JanelaPrincipal` controlará o `javax.swing.Timer`.
 - A `Casa` será a fonte única dos dispositivos.
