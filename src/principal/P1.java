@@ -29,7 +29,7 @@ public class P1 implements Serializable{
                     casa.adicionarDispositivo(new Dispositivo(campos[1], campos[2], campos[3], campos[4], campos[5], campos[6], campos[7]));
                 }
             }
-            SalvarObjeto.salvar(casa);
+            SalvarObjeto.salvar(casa, arquivoCSV.replace(".csv", ".ser"));
 
         } catch (IOException e) {
             e.printStackTrace();
