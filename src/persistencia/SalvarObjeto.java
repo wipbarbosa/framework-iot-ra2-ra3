@@ -3,16 +3,14 @@ package persistencia;
 import java.io.*;
 import modelo.Casa;
 
-public class SalvarObjeto implements Serializable {
-    public static void salvar(Casa casa) throws IOException{
-        try (FileOutputStream fos = new FileOutputStream("casa.bin");
+public class SalvarObjeto {
+    public static void salvar(Casa casa, String caminhoArquivo) throws IOException{
+        try (FileOutputStream fos = new FileOutputStream(caminhoArquivo);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 
             oos.writeObject(casa);
             System.out.println("Objeto salvo com sucesso!");
-            
-        } catch (IOException e) {
-            e.printStackTrace();
+
         }
     }
 }
