@@ -7,7 +7,7 @@ build/
 target/
 
 # Arquivos gerados pela aplicação
-*.dat
+
 *.log
 
 # Configurações de IDE
