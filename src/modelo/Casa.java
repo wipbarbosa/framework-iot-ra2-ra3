@@ -79,6 +79,16 @@ public class Casa implements Serializable {
         return null;
     }
 
+    public Comodo buscarComodoPorId(String id) {
+        for (Comodo comodo : comodos) {
+            if (comodo.getId().equals(id)) {
+                return comodo;
+            }
+        }
+
+        return null;
+    }
+
     public Dispositivo buscarDispositivoPorId(String id) {
         for (Dispositivo dispositivo : dispositivos) {
             if (dispositivo.getId().equals(id)) {
