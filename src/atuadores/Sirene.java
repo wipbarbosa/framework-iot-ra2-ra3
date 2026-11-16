@@ -1,7 +1,5 @@
 package atuadores;
 
-import javax.annotation.processing.SupportedOptions;
-
 import excecoes.AtuadorIndisponivelException;
 
 public class Sirene extends Atuador {
@@ -13,21 +11,21 @@ public class Sirene extends Atuador {
     }
 
     public void tocar() throws AtuadorIndisponivelException {
-        ligar();
+        acionar();
     }
 
     public void parar() throws AtuadorIndisponivelException {
         desligar();
     }
 
-    @Override 
+    @Override
     public String getStatus() {
         if (!isDisponivel()) {
-            return "Sirene" + getNome() + ": INDISPONIVEL";
+            return "Sirene " + getNome() + ": INDISPONIVEL";
         }
         if (isLigado()) {
-            return "Sirene" + getNome() + ": TOCANDO";
+            return "Sirene " + getNome() + ": TOCANDO";
         }
-        return "Sirene" + getNome() + ": DESLIGADA";
+        return "Sirene " + getNome() + ": DESLIGADA";
     }
 }
