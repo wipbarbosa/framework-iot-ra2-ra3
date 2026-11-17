@@ -1,59 +1,47 @@
 package principal;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Serializable;
-
-import atuadores.ArCondicionado;
-import atuadores.Sirene;
 import modelo.Casa;
 import modelo.Comodo;
+import modelo.Dispositivo;
+import persistencia.LeitorDados;
 import persistencia.SalvarObjeto;
-import sensores.SensorFumaca;
-import sensores.Termometro;
 
-public class P1 implements Serializable {
+/**
+ * Programa P1: lê dados/casa.csv, cria os objetos da casa (LeitorDados)
+ * e os salva em formato binário (SalvarObjeto). Não abre interface gráfica.
+ */
+public class P1 {
+
     public static void main(String[] args) {
         String arquivoCSV = "dados/casa.csv";
-        String linha = "";
-        String divisor = ";";
+        String arquivoBinario = "dados/casa.ser";
 
-        Casa casa = new Casa("Home");
+        try {
+            // lê e valida o CSV; se houver erro, lança IOException com a linha
+            Casa casa = new LeitorDados().lerDadosIniciais(arquivoCSV);
 
-        try (BufferedReader br = new BufferedReader(new FileReader(arquivoCSV))) {
-            br.readLine();
+            // só chega aqui se o CSV estiver correto
+            SalvarObjeto.salvar(casa, arquivoBinario);
 
-            while ((linha = br.readLine()) != null) {
-                String[] campos = linha.split(divisor);
-                if (campos[0].equals("COMODO")) {
-                    casa.adicionarComodo(new Comodo(
-                            campos[1],
-                            campos[2],
-                            Integer.parseInt(campos[4]),
-                            Integer.parseInt(campos[5]),
-                            Integer.parseInt(campos[6]),
-                            Integer.parseInt(campos[7])
-                    ));
-                } else {
-                    int x = Integer.parseInt(campos[4]);
-                    int y = Integer.parseInt(campos[5]);
-
-                    if (campos[0].equals("TERMOMETRO")) {
-                        casa.adicionarDispositivo(new Termometro(campos[1], campos[2], campos[3], x, y, Double.parseDouble(campos[6])));
-                    } else if (campos[0].equals("FUMACA")) {
-                        casa.adicionarDispositivo(new SensorFumaca(campos[1], campos[2], campos[3], x, y));
-                    } else if (campos[0].equals("AR")) {
-                        casa.adicionarDispositivo(new ArCondicionado(campos[1], campos[2], campos[3], x, y));
-                    } else if (campos[0].equals("SIRENE")) {
-                        casa.adicionarDispositivo(new Sirene(campos[1], campos[2], campos[3], x, y));
-                    }
-                }
-            }
-            SalvarObjeto.salvar(casa, arquivoCSV.replace(".csv", ".ser"));
+            imprimirResumo(casa);
+            System.out.println("Arquivo gerado: " + arquivoBinario);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("ERRO: " + e.getMessage());
+            System.out.println("O arquivo " + arquivoBinario + " NÃO foi gerado.");
+        }
+    }
+
+    private static void imprimirResumo(Casa casa) {
+        System.out.println("Casa: " + casa.getNome());
+        for (Comodo c : casa.getComodos()) {
+            System.out.println("  Cômodo " + c.getId() + " - " + c.getNome());
+        }
+        for (Dispositivo d : casa.getDispositivos()) {
+            // chamada polimórfica: cada dispositivo responde getStatus() do seu jeito
+            System.out.println("  " + d.getId() + " - " + d.getNome()
+                    + " [" + d.getComodoNome() + "] " + d.getStatus());
         }
     }
 }
