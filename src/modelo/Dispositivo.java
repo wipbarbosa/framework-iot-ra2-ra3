@@ -1,8 +1,9 @@
 package modelo;
 
 import java.io.Serializable;
+import interfaces.Registravel;
 
-public abstract class Dispositivo implements Serializable {
+public abstract class Dispositivo implements Serializable, Registravel {
 
     private static final long serialVersionUID = 1L;
 
@@ -62,4 +63,9 @@ public abstract class Dispositivo implements Serializable {
     }
 
     public abstract String getStatus();
+
+    @Override
+    public String gerarRegistro() {
+        return id + ";" + nome + ";" + comodoNome + ";" + getStatus();
+    }
 }
