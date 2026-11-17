@@ -2,10 +2,10 @@ package interfacegrafica;
 
 // imports
 import atuadores.*;
+import java.awt.*;
+import javax.swing.*;
 import modelo.*;
 import sensores.*;
-import javax.swing.*;
-import java.awt.*;
 
 public class PainelPlanta extends JPanel {
     private Casa casa;
@@ -35,10 +35,9 @@ public class PainelPlanta extends JPanel {
         for (int i = 0; i < casa.getDispositivos().size(); i++) {
             Dispositivo d = casa.getDispositivos().get(i);
             Comodo comodo = casa.buscarComodoPorId(d.getComodoNome());
-            if (comodo == null) comodo = casa.buscarComodoPorNome(d.getComodoNome());
-            // configura o local de cada dispositivo de acordo
-            int x = d.getX() + (comodo != null ? comodo.getX() : 0);
-            int y = d.getY() + (comodo != null ? comodo.getY() : 0);
+
+            int x = d.getX();
+            int y = d.getY();
 
             // dependendo da situação do dispositivo sua cor pode mudar, essa parte configura isso
             Color cor = Color.DARK_GRAY;
